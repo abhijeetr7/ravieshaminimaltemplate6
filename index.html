@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ravish Systems | The Art of Technology</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #FFFFFF;
+            --bg-soft: #FBF9F6;
+            --royal-purple: #2D1B4D;
+            --gold-leaf: #D4AF37;
+            --text-dark: #1A1A1A;
+            --text-light: #666666;
+            /* Apple-style Bezier Curve */
+            --apple-ease: cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--bg-main); color: var(--text-dark); overflow-x: hidden; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+
+        h1, h2, h3, .logo { font-family: 'Cinzel', serif; text-transform: uppercase; letter-spacing: 4px; }
+        .playfair { font-family: 'Playfair Display', serif; font-style: italic; }
+
+        /* --- Navigation: Blurred & Floating --- */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1.5rem 8%; position: fixed; width: 100%; top: 0;
+            background: rgba(255, 255, 255, 0.8); backdrop-filter: saturate(180%) blur(20px);
+            z-index: 1000; transition: var(--apple-ease) 0.5s;
+        }
+
+        .logo { font-size: 1rem; font-weight: 700; color: var(--royal-purple); }
+        .logo span { color: var(--gold-leaf); }
+
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a { 
+            text-decoration: none; color: var(--text-light); font-size: 0.75rem; 
+            font-weight: 600; cursor: pointer; transition: 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--royal-purple); }
+
+        /* --- Animation Engine --- */
+        .reveal { opacity: 0; transform: translateY(50px) scale(0.98); transition: all 1.2s var(--apple-ease); }
+        .reveal.active { opacity: 1; transform: translateY(0) scale(1); }
+
+        .stagger-item { opacity: 0; transform: translateY(30px); transition: all 0.8s var(--apple-ease); }
+        .stagger-item.active { opacity: 1; transform: translateY(0); }
+
+        /* --- Apple-Style Hero --- */
+        main { margin-top: 80px; }
+        .hero { 
+            height: 90vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; overflow: hidden; position: relative;
+        }
+
+        .hero h1 { font-size: clamp(3rem, 8vw, 6rem); line-height: 1; margin-bottom: 2rem; }
+        .hero p { max-width: 600px; color: var(--text-light); font-size: 1.2rem; margin-bottom: 3rem; }
+
+        /* --- Image Interactions --- */
+        .img-container {
+            width: 100%; height: 600px; border-radius: 30px; overflow: hidden;
+            position: relative; margin: 4rem 0; box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+        }
+        .img-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.5s var(--apple-ease); }
+        .img-container:hover img { transform: scale(1.05); }
+
+        /* --- Layout Structures --- */
+        .section-padding { padding: 10rem 10%; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+
+        /* --- Luxury Button --- */
+        .btn-apple {
+            background: var(--royal-purple); color: white; padding: 1.2rem 3.5rem;
+            border-radius: 50px; border: none; font-family: 'Cinzel'; font-size: 0.8rem;
+            cursor: pointer; transition: all 0.4s var(--apple-ease);
+        }
+        .btn-apple:hover { transform: scale(1.05); box-shadow: 0 15px 30px rgba(45, 27, 77, 0.2); }
+
+        /* --- Page Logic Components --- */
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .apple-card { 
+            background: var(--bg-soft); padding: 4rem; border-radius: 30px; 
+            transition: all 0.5s var(--apple-ease);
+        }
+        .apple-card:hover { background: white; box-shadow: 0 40px 80px rgba(0,0,0,0.05); transform: translateY(-10px); }
+
+        input, textarea {
+            width: 100%; padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 15px;
+            border: 1px solid #eee; background: var(--bg-soft); outline: none; transition: 0.3s;
+        }
+        input:focus { background: white; border-color: var(--gold-leaf); box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1); }
+
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <div class="logo">RAVISH <span>SYSTEMS</span></div>
+        <ul class="nav-links">
+            <li><a onclick="route('home')" id="link-home" class="active">HOME</a></li>
+            <li><a onclick="route('about')" id="link-about">ABOUT</a></li>
+            <li><a onclick="route('bespoke')" id="link-bespoke">BESPOKE</a></li>
+            <li><a onclick="route('expertise')" id="link-expertise">EXPERTISE</a></li>
+            <li><a onclick="route('customers')" id="link-customers">CUSTOMERS</a></li>
+            <li><a onclick="route('news')" id="link-news">NEWS</a></li>
+            <li><a onclick="route('contact')" id="link-contact">CONTACT</a></li>
+        </ul>
+    </nav>
+
+    <main id="app-root">
+        </main>
+
+    <script>
+        const content = {
+            home: `
+                <section class="hero reveal">
+                    <p style="letter-spacing: 5px; color: var(--gold-leaf); margin-bottom: 1rem;">THE FUTURE OF SYSTEMS</p>
+                    <h1>If You Can <span class="playfair">Dream</span> It,<br>We Can <span class="playfair">Create</span> It.</h1>
+                    <button class="btn-apple" onclick="route('bespoke')">EXPLORE THE COLLECTION</button>
+                </section>
+
+                <section class="section-padding grid-2">
+                    <div class="reveal">
+                        <h2 style="font-size: 2.5rem;">Precision <br>Meets Performance.</h2>
+                        <p style="margin: 2rem 0; color: var(--text-light); line-height: 2;">
+                            Our architecture is defined by the same obsessive attention to detail that drives the world's most iconic brands. From Spring Boot logic to Angular fluidity, we craft digital excellence.
+                        </p>
+                        <button class="btn-apple" onclick="route('expertise')">OUR TECH ATELIER</button>
+                    </div>
+                    <div class="img-container reveal">
+                        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1000">
+                    </div>
+                </section>
+            `,
+            about: `
+                <section class="section-padding reveal">
+                    <center>
+                        <h1>Architecting <span class="playfair">Legacies.</span></h1>
+                        <div class="img-container" style="height: 500px; width: 80%;">
+                            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1000">
+                        </div>
+                        <p style="max-width: 700px; line-height: 2; font-size: 1.1rem; color: var(--text-light);">
+                            Ravish Systems is a technical design house founded on the principle that code should be as elegant as a bespoke suit. We combine years of IT expertise with a refined aesthetic sense to deliver systems that empower global innovators.
+                        </p>
+                    </center>
+                </section>
+            `,
+            bespoke: `
+                <section class="section-padding reveal">
+                    <h1 style="margin-bottom: 4rem;">Bespoke Collections</h1>
+                    <div class="card-grid">
+                        <div class="apple-card stagger-item">
+                            <h3>01 / Couture ERP</h3>
+                            <p style="margin-top: 1rem; color: var(--text-light);">Management systems designed with high-end luxury interfaces.</p>
+                        </div>
+                        <div class="apple-card stagger-item">
+                            <h3>02 / Fluid PWAs</h3>
+                            <p style="margin-top: 1rem; color: var(--text-light);">Applications that bridge the gap between web and native performance.</p>
+                        </div>
+                    </div>
+                </section>
+            `,
+            expertise: `
+                <section class="section-padding reveal">
+                    <div class="grid-2">
+                        <div class="img-container"><img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1000"></div>
+                        <div>
+                            <h2>Our Core Stack</h2>
+                            <p style="margin-top: 2rem; line-height: 2; font-size: 1.1rem; color: var(--text-light);">
+                                Full-stack proficiency in Java Spring Boot, Angular, and React. We leverage AWS infrastructure to ensure your digital platform scales to meet any global demand.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            `,
+            customers: `
+                <section class="section-padding reveal">
+                    <center>
+                        <h1 style="font-size: 3rem;">A World-Class Portfolio</h1>
+                        <p style="margin-top: 2rem; color: var(--text-light);">Partnering with industry titans across the globe.</p>
+                        <div class="card-grid" style="margin-top: 6rem;">
+                            <div class="apple-card"><h3>Global Retail</h3></div>
+                            <div class="apple-card"><h3>Tech Pioneers</h3></div>
+                            <div class="apple-card"><h3>Royal Estates</h3></div>
+                        </div>
+                    </center>
+                </section>
+            `,
+            news: `
+                <section class="section-padding reveal">
+                    <h1 style="margin-bottom: 4rem;">The Journal</h1>
+                    <div class="apple-card" style="margin-bottom: 1rem;">
+                        <span style="color: var(--gold-leaf); font-weight: 600;">APRIL 2026</span>
+                        <h3>The New Minimalism in Software Design</h3>
+                    </div>
+                    <div class="apple-card">
+                        <span style="color: var(--gold-leaf); font-weight: 600;">MARCH 2026</span>
+                        <h3>Spring Boot: The Engine of Luxury E-Commerce</h3>
+                    </div>
+                </section>
+            `,
+            contact: `
+                <section class="section-padding reveal">
+                    <div class="grid-2">
+                        <div>
+                            <h1 style="font-size: 4rem;">Let's <br>Dialogue.</h1>
+                            <p style="margin-top: 2rem; color: var(--text-light);">Private consultations by appointment only.</p>
+                        </div>
+                        <div class="apple-card">
+                            <form>
+                                <input type="text" placeholder="Your Name">
+                                <input type="email" placeholder="Email Address">
+                                <textarea placeholder="How can we assist you?" rows="5"></textarea>
+                                <button class="btn-apple" style="width: 100%;">SEND INQUIRY</button>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            `
+        };
+
+        // --- Core Functions ---
+
+        function route(page) {
+            const root = document.getElementById('app-root');
+            
+            // Fade out current content
+            root.style.opacity = '0';
+            root.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                root.innerHTML = content[page];
+                root.style.opacity = '1';
+                root.style.transform = 'translateY(0)';
+                
+                // Update Navigation
+                document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active'));
+                document.getElementById(`link-${page}`).classList.add('active');
+                
+                // Re-initialize Animation Observer
+                initAnimations();
+                window.scrollTo(0, 0);
+            }, 400);
+        }
+
+        function initAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal, .stagger-item').forEach(el => observer.observe(el));
+        }
+
+        window.onload = () => route('home');
+        window.onscroll = () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.style.padding = '1rem 8%';
+                nav.style.boxShadow = '0 10px 30px rgba(0,0,0,0.05)';
+            } else {
+                nav.style.padding = '1.5rem 8%';
+                nav.style.boxShadow = 'none';
+            }
+        };
+    </script>
+</body>
+</html>
